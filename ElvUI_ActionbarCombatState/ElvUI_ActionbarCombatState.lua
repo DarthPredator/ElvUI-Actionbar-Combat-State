@@ -39,6 +39,7 @@ function AB:LeavingCombat(force, x)
 end
 
 function AB:MouseOverOption(i)
+	if not IsAddOnLoaded("ElvUI_Config") then return end
 	if E.db.actionbar.combatstate['bar'..i]['enable'] then
 		E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = nil
 		E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = nil
@@ -74,7 +75,7 @@ function AB:Initialize()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnteringCombat")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "LeavingCombat")
 	EP:RegisterPlugin(addon,ABCSGetOptions)
-	
+
 	for i = 1, 6 do
 		AB:MouseOverOption(i)
 	end
