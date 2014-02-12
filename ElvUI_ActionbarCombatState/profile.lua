@@ -5,7 +5,7 @@ P.actionbar['combatstate'] = {
 		["enable"] = false,
 		["ic"] = {
 			['mouseover'] = false,
-			['visibility'] = "[petbattle][nocombat] hide; show",
+			['visibility'] = P.actionbar.bar1.visibility,
 		},
 		["ooc"] = {
 			['mouseover'] = true,
@@ -16,7 +16,7 @@ P.actionbar['combatstate'] = {
 		["enable"] = false,
 		["ic"] = {
 			['mouseover'] = false,
-			['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; [nocombat] hide; show",
+			['visibility'] = P.actionbar.bar2.visibility,
 		},
 		["ooc"] = {
 			['mouseover'] = true,
@@ -27,7 +27,7 @@ P.actionbar['combatstate'] = {
 		["enable"] = false,
 		["ic"] = {
 			['mouseover'] = false,
-			['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; [nocombat] hide; show",
+			['visibility'] = P.actionbar.bar3.visibility,
 		},
 		["ooc"] = {
 			['mouseover'] = true,
@@ -38,7 +38,7 @@ P.actionbar['combatstate'] = {
 		["enable"] = false,
 		["ic"] = {
 			['mouseover'] = false,
-			['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; [nocombat] hide; show",
+			['visibility'] = P.actionbar.bar4.visibility,
 		},
 		["ooc"] = {
 			['mouseover'] = true,
@@ -49,7 +49,7 @@ P.actionbar['combatstate'] = {
 		["enable"] = false,
 		["ic"] = {
 			['mouseover'] = false,
-			['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; [nocombat] hide; show",
+			['visibility'] = P.actionbar.bar5.visibility,
 		},
 		["ooc"] = {
 			['mouseover'] = true,
@@ -60,7 +60,7 @@ P.actionbar['combatstate'] = {
 		["enable"] = false,
 		["ic"] = {
 			['mouseover'] = false,
-			['visibility'] = "[vehicleui] hide; [overridebar] hide; [petbattle] hide; [nocombat] hide; show",
+			['visibility'] = P.actionbar.bar6.visibility,
 		},
 		["ooc"] = {
 			['mouseover'] = true,
