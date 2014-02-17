@@ -9,6 +9,8 @@
 ## RequiredDeps: ElvUI
 ## OptionalDeps: ElvUI_SLE
 ## DefaultState: Enabled
+## X-Tukui-ProjectID: 220
+## X-Tukui-ProjectFolders: ElvUI_ActionbarCombatState
 
 locales\load_locales.xml
 profile.lua
