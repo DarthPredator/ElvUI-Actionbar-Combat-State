@@ -1,9 +1,10 @@
 local E, L, V, P, G, _ = unpack(ElvUI);
-local AB = E:GetModule('ActionBars');
+local ABCS = E:GetModule('ActionBarCS');
+local bars
 
 --Options
-local function ABConf()
-	for i=1, 6 do
+local function ABConf(bars)
+	for i=1, bars do
 		local name = L['Bar ']..i
 		E.Options.args.actionbar.args.combatstate.args['bar'..i] = {
 			order = i,
@@ -17,7 +18,7 @@ local function ABConf()
 					order = 1,
 					name = L['Enable'],
 					get = function(info) return E.db.actionbar.combatstate['bar'..i]['enable'] end,
-					set = function(info, value) E.db.actionbar.combatstate['bar'..i]['enable'] = value; AB:MouseOverOption(i); AB:LeavingCombat(true, i) end
+					set = function(info, value) E.db.actionbar.combatstate['bar'..i]['enable'] = value; ABCS:MouseOverOption(i); ABCS:LeavingCombat(true, i) end
 				},
 				ic = {
 					order = 2,
@@ -74,7 +75,7 @@ local function ABConf()
 							order = 2,
 							name = L['Mouseover'],
 							desc = L['The frame is not shown unless you mouse over the frame.'],
-							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover'] = value; AB:LeavingCombat() end,
+							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
 						},
 						alpha = {
 							order = 3,
@@ -82,7 +83,7 @@ local function ABConf()
 							name = L['Alpha'],
 							isPercent = true,
 							min = 0, max = 1, step = 0.01,
-							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['alpha'] = value; AB:LeavingCombat() end,
+							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['alpha'] = value; ABCS:LeavingCombat() end,
 						},
 						visibility = {
 							type = 'input',
@@ -91,7 +92,7 @@ local function ABConf()
 							desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
 							width = 'full',
 							multiline = true,
-							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover'] = value; AB:LeavingCombat() end,
+							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
 						},
 					},
 				},
@@ -121,5 +122,7 @@ E.Options.args.actionbar.args.combatstate = {
 	},
 }
 
-ABConf()
+bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
+
+ABConf(bars)
 end

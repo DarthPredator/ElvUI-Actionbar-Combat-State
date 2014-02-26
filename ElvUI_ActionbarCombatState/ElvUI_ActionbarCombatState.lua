@@ -1,10 +1,12 @@
 ﻿local E, L, V, P, G, _ =  unpack(ElvUI);
+local ABCS = E:NewModule('ActionBarCS', 'AceHook-3.0', 'AceEvent-3.0');
 local AB = E:GetModule('ActionBars');
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addon = ...
+local bars
 
-function AB:EnteringCombat()
-	for i = 1, 6 do
+function ABCS:EnteringCombat()
+	for i = 1, bars do
 		if E.db.actionbar.combatstate['bar'..i]['enable'] then
 			E.db.actionbar['bar'..i]['visibility'] = E.db.actionbar.combatstate['bar'..i]['ic']['visibility']
 			E.db.actionbar['bar'..i]['mouseover'] = E.db.actionbar.combatstate['bar'..i]['ic']['mouseover']
@@ -15,8 +17,8 @@ function AB:EnteringCombat()
 	end
 end
 
-function AB:LeavingCombat(force, x)
-	for i = 1, 6 do
+function ABCS:LeavingCombat(force, x)
+	for i = 1, bars do
 		if E.db.actionbar.combatstate['bar'..i]['enable'] then
 			E.db.actionbar['bar'..i]['visibility'] = E.db.actionbar.combatstate['bar'..i]['ooc']['visibility']
 			E.db.actionbar['bar'..i]['mouseover'] = E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover']
@@ -42,56 +44,94 @@ function AB:LeavingCombat(force, x)
 	end
 end
 
-function AB:MouseOverOption(i)
+function ABCS:MouseOverOption(i)
 	if not IsAddOnLoaded("ElvUI_Config") then return end
-	if E.db.actionbar.combatstate['bar'..i]['enable'] then
-		E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = nil
-		E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = nil
-		E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = nil
+	if IsAddOnLoaded('ElvUI_ExtraActionBars') and i > 6 then
+		if E.db.actionbar.combatstate['bar'..i]['enable'] then
+			E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['mouseover'] = nil
+			E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['visibility'] = nil
+			E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['alpha'] = nil
+		else
+			E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['mouseover'] = {
+				order = 5,
+				name = L['Mouse Over'],
+				desc = L['The frame is not shown unless you mouse over the frame.'],
+				type = "toggle",
+				get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
+				set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; AB:PositionAndSizeBar('bar'..i) end,
+			}
+			E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['alpha'] = {
+				order = 12,
+				type = 'range',
+				name = L['Alpha'],
+				isPercent = true,
+				min = 0, max = 1, step = 0.01,
+				get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
+				set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; AB:PositionAndSizeBar('bar'..i) end,
+			}
+			E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['visibility'] = {
+				type = 'input',
+				order = 14,
+				name = L['Visibility State'],
+				desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
+				width = 'full',
+				multiline = true,
+				get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
+				set = function(info, value) 						
+					E.db.actionbar['bar'..i]['visibility'] = value; 
+					AB:UpdateButtonSettings()
+				end,
+			}
+		end
 	else
-		E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = {
-			order = 5,
-			name = L['Mouse Over'],
-			desc = L['The frame is not shown unless you mouse over the frame.'],
-			type = "toggle",
-			get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
-			set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; AB:PositionAndSizeBar('bar'..i) end,
-		}
-		E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = {
-			order = 12,
-			type = 'range',
-			name = L['Alpha'],
-			isPercent = true,
-			min = 0, max = 1, step = 0.01,
-			get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
-			set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; AB:PositionAndSizeBar('bar'..i) end,
-		}
-		E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = {
-			type = 'input',
-			order = 14,
-			name = L['Visibility State'],
-			desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
-			width = 'full',
-			multiline = true,
-			get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
-			set = function(info, value) 						
-				E.db.actionbar['bar'..i]['visibility'] = value; 
-				AB:UpdateButtonSettings()
-			end,
-		}
+		if E.db.actionbar.combatstate['bar'..i]['enable'] then
+			E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = nil
+			E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = nil
+			E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = nil
+		else
+			E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = {
+				order = 5,
+				name = L['Mouse Over'],
+				desc = L['The frame is not shown unless you mouse over the frame.'],
+				type = "toggle",
+				get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
+				set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; AB:PositionAndSizeBar('bar'..i) end,
+			}
+			E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = {
+				order = 12,
+				type = 'range',
+				name = L['Alpha'],
+				isPercent = true,
+				min = 0, max = 1, step = 0.01,
+				get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
+				set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; AB:PositionAndSizeBar('bar'..i) end,
+			}
+			E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = {
+				type = 'input',
+				order = 14,
+				name = L['Visibility State'],
+				desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
+				width = 'full',
+				multiline = true,
+				get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
+				set = function(info, value) 						
+					E.db.actionbar['bar'..i]['visibility'] = value; 
+					AB:UpdateButtonSettings()
+				end,
+			}
+		end
 	end
 end
 
-AB.InitializeABCS = AB.Initialize
-function AB:Initialize()
-	
-	AB.InitializeABCS(self)
+function ABCS:Initialize()
+	bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnteringCombat")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "LeavingCombat")
 	EP:RegisterPlugin(addon,ABCSGetOptions)
 
-	for i = 1, 6 do
-		AB:MouseOverOption(i)
+	for i = 1, bars do
+		ABCS:MouseOverOption(i)
 	end
-	
 end
+
+E:RegisterModule(ABCS:GetName())

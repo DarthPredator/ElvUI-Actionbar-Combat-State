@@ -7,12 +7,14 @@
 ## eMail: darthpred@gmail.com
 ## URL: 
 ## RequiredDeps: ElvUI
-## OptionalDeps: ElvUI_SLE
+## OptionalDeps: ElvUI_SLE, ElvUI_ExtraActionBars
 ## DefaultState: Enabled
-## X-Tukui-ProjectID: 220
-## X-Tukui-ProjectFolders: ElvUI_ActionbarCombatState
 
 locales\load_locales.xml
 profile.lua
-options.lua
 ElvUI_ActionbarCombatState.lua
+options.lua
+ 
+ 
+## X-Tukui-ProjectID: 220
+## X-Tukui-ProjectFolders: ElvUI_ActionbarCombatState
