@@ -7,13 +7,13 @@ P.actionbar['combatstate']["bar"..i] = {
 	["enable"] = false,
 	["ic"] = {
 		['mouseover'] = false,
-		['visibility'] = P.actionbar.bar1.visibility,
-		['alpha'] = P.actionbar.bar1.alpha,
+		['visibility'] = P.actionbar["bar"..i]['visibility'],
+		['alpha'] = P.actionbar["bar"..i]['alpha'],
 	},
 	["ooc"] = {
 		['mouseover'] = true,
-		['visibility'] = P.actionbar.bar1.visibility,
-		['alpha'] = P.actionbar.bar1.alpha,
+		['visibility'] = P.actionbar["bar"..i]['visibility'],
+		['alpha'] = P.actionbar["bar"..i]['alpha'],
 	},
 }
 end
