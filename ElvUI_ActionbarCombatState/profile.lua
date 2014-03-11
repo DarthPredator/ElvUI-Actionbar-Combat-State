@@ -17,3 +17,29 @@ P.actionbar['combatstate']["bar"..i] = {
 	},
 }
 end
+
+P.actionbar['combatstate']['barPet'] = {
+	["enable"] = false,
+	["ic"] = {
+		['mouseover'] = false,
+		['visibility'] = P.actionbar['barPet']['visibility'],
+		['alpha'] = P.actionbar['barPet']['alpha'],
+	},
+	["ooc"] = {
+		['mouseover'] = true,
+		['visibility'] = P.actionbar['barPet']['visibility'],
+		['alpha'] = P.actionbar['barPet']['alpha'],
+	},
+}
+
+P.actionbar['combatstate']['stanceBar'] = {
+	["enable"] = false,
+	["ic"] = {
+		['mouseover'] = false,
+		['alpha'] = P.actionbar['stanceBar']['alpha'],
+	},
+	["ooc"] = {
+		['mouseover'] = true,
+		['alpha'] = P.actionbar['stanceBar']['alpha'],
+	},
+}

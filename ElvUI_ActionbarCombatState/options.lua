@@ -10,7 +10,7 @@ local function ABConf(bars)
 			order = i,
 			name = name,
 			type = 'group',
-			order = 200,
+			order = i,
 			disabled = function() return not E.private.actionbar.enable or not E.db.actionbar['bar'..i]['enabled'] end,
 			args = {
 				enable = {
@@ -99,6 +99,173 @@ local function ABConf(bars)
 			},
 		}
 	end
+	E.Options.args.actionbar.args.combatstate.args.barPet = {
+		order = i,
+		name = L['Pet Bar'],
+		type = 'group',
+		order = 15,
+		disabled = function() return not E.private.actionbar.enable or not E.db.actionbar.barPet['enabled'] end,
+		args = {
+			enable = {
+				type = "toggle",
+				order = 1,
+				name = L['Enable'],
+				get = function(info) return E.db.actionbar.combatstate.barPet['enable'] end,
+				set = function(info, value) E.db.actionbar.combatstate.barPet['enable'] = value; ABCS:MouseOverOption("pet"); ABCS:LeavingCombat(true, "pet") end
+			},
+			ic = {
+				order = 2,
+				name = L["In Combat"],
+				type = 'group',
+				guiInline = true,
+				disabled = function() return not E.db.actionbar.combatstate.barPet['enable'] end,
+				get = function(info) return E.db.actionbar.combatstate.barPet['ic'][ info[#info] ] end,
+				set = function(info, value) E.db.actionbar.combatstate.barPet['ic'][ info[#info] ]  = value end,
+				args = {
+					intro = {
+						order = 1,
+						type = 'description',
+						name = L["Conditions below will take effet when entering combat."],
+					},
+					mouseover = {
+						type = "toggle",
+						order = 2,
+						name = L['Mouseover'],
+						desc = L['The frame is not shown unless you mouse over the frame.'],
+					},
+					alpha = {
+						order = 3,
+						type = 'range',
+						name = L['Alpha'],
+						isPercent = true,
+						min = 0, max = 1, step = 0.01,
+					},
+					visibility = {
+						type = 'input',
+						order = 4,
+						name = L['Visibility State'],
+						desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
+						width = 'full',
+						multiline = true,
+					},
+				},
+			},
+			ooc = {
+				order = 3,
+				name = L["Out of Combat"],
+				type = 'group',
+				guiInline = true,
+				disabled = function() return not E.db.actionbar.combatstate.barPet['enable'] end,
+				get = function(info) return E.db.actionbar.combatstate.barPet['ooc'][ info[#info] ] end,
+				args = {
+					intro = {
+						order = 1,
+						type = 'description',
+						name = L["Conditions below will take effet when leaving combat."],
+					},
+					mouseover = {
+						type = "toggle",
+						order = 2,
+						name = L['Mouseover'],
+						desc = L['The frame is not shown unless you mouse over the frame.'],
+						set = function(info, value) E.db.actionbar.combatstate.barPet['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
+					},
+					alpha = {
+						order = 3,
+						type = 'range',
+						name = L['Alpha'],
+						isPercent = true,
+						min = 0, max = 1, step = 0.01,
+						set = function(info, value) E.db.actionbar.combatstate.barPet['ooc']['alpha'] = value; ABCS:LeavingCombat() end,
+					},
+					visibility = {
+						type = 'input',
+						order = 4,
+						name = L['Visibility State'],
+						desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
+						width = 'full',
+						multiline = true,
+						set = function(info, value) E.db.actionbar.combatstate.barPet['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
+					},
+				},
+			},
+		},
+	}
+	E.Options.args.actionbar.args.combatstate.args.stanceBar = {
+		order = i,
+		name = L['Stance Bar'],
+		type = 'group',
+		order = 20,
+		disabled = function() return not E.private.actionbar.enable or not E.db.actionbar.stanceBar['enabled'] end,
+		args = {
+			enable = {
+				type = "toggle",
+				order = 1,
+				name = L['Enable'],
+				get = function(info) return E.db.actionbar.combatstate.stanceBar['enable'] end,
+				set = function(info, value) E.db.actionbar.combatstate.stanceBar['enable'] = value; ABCS:MouseOverOption("stance"); ABCS:LeavingCombat(true, "stance") end
+			},
+			ic = {
+				order = 2,
+				name = L["In Combat"],
+				type = 'group',
+				guiInline = true,
+				disabled = function() return not E.db.actionbar.combatstate.stanceBar['enable'] end,
+				get = function(info) return E.db.actionbar.combatstate.stanceBar['ic'][ info[#info] ] end,
+				set = function(info, value) E.db.actionbar.combatstate.stanceBar['ic'][ info[#info] ]  = value end,
+				args = {
+					intro = {
+						order = 1,
+						type = 'description',
+						name = L["Conditions below will take effet when entering combat."],
+					},
+					mouseover = {
+						type = "toggle",
+						order = 2,
+						name = L['Mouseover'],
+						desc = L['The frame is not shown unless you mouse over the frame.'],
+					},
+					alpha = {
+						order = 3,
+						type = 'range',
+						name = L['Alpha'],
+						isPercent = true,
+						min = 0, max = 1, step = 0.01,
+					},
+				},
+			},
+			ooc = {
+				order = 3,
+				name = L["Out of Combat"],
+				type = 'group',
+				guiInline = true,
+				disabled = function() return not E.db.actionbar.combatstate.stanceBar['enable'] end,
+				get = function(info) return E.db.actionbar.combatstate.stanceBar['ooc'][ info[#info] ] end,
+				args = {
+					intro = {
+						order = 1,
+						type = 'description',
+						name = L["Conditions below will take effet when leaving combat."],
+					},
+					mouseover = {
+						type = "toggle",
+						order = 2,
+						name = L['Mouseover'],
+						desc = L['The frame is not shown unless you mouse over the frame.'],
+						set = function(info, value) E.db.actionbar.combatstate.stanceBar['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
+					},
+					alpha = {
+						order = 3,
+						type = 'range',
+						name = L['Alpha'],
+						isPercent = true,
+						min = 0, max = 1, step = 0.01,
+						set = function(info, value) E.db.actionbar.combatstate.stanceBar['ooc']['alpha'] = value; ABCS:LeavingCombat() end,
+					},
+				},
+			},
+		},
+	}
 end
 
 
