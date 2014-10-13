@@ -18,7 +18,7 @@ local function ABConf(bars)
 					order = 1,
 					name = L['Enable'],
 					get = function(info) return E.db.actionbar.combatstate['bar'..i]['enable'] end,
-					set = function(info, value) E.db.actionbar.combatstate['bar'..i]['enable'] = value; ABCS:MouseOverOption(i); ABCS:LeavingCombat(true, i) end
+					set = function(info, value) E.db.actionbar.combatstate['bar'..i]['enable'] = value; ABCS:MouseOverOption(i); ABCS:SettingsUpdate(i); ABCS:LeavingCombat(true, i) end
 				},
 				ic = {
 					order = 2,
@@ -111,7 +111,7 @@ local function ABConf(bars)
 				order = 1,
 				name = L['Enable'],
 				get = function(info) return E.db.actionbar.combatstate.barPet['enable'] end,
-				set = function(info, value) E.db.actionbar.combatstate.barPet['enable'] = value; ABCS:MouseOverOption("pet"); ABCS:LeavingCombat(true, "pet") end
+				set = function(info, value) E.db.actionbar.combatstate.barPet['enable'] = value; ABCS:MouseOverOption("pet"); ABCS:SettingsUpdate("pet"); ABCS:LeavingCombat(true, "pet") end
 			},
 			ic = {
 				order = 2,
@@ -203,7 +203,7 @@ local function ABConf(bars)
 				order = 1,
 				name = L['Enable'],
 				get = function(info) return E.db.actionbar.combatstate.stanceBar['enable'] end,
-				set = function(info, value) E.db.actionbar.combatstate.stanceBar['enable'] = value; ABCS:MouseOverOption("stance"); ABCS:LeavingCombat(true, "stance") end
+				set = function(info, value) E.db.actionbar.combatstate.stanceBar['enable'] = value; ABCS:MouseOverOption("stance"); ABCS:SettingsUpdate("stance"); ABCS:LeavingCombat(true, "stance") end
 			},
 			ic = {
 				order = 2,
