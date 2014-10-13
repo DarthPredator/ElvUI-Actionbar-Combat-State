@@ -15,6 +15,11 @@ P.actionbar['combatstate']["bar"..i] = {
 		['visibility'] = P.actionbar["bar"..i]['visibility'],
 		['alpha'] = P.actionbar["bar"..i]['alpha'],
 	},
+	['lastSaved'] = {
+		['mouseover'] = '',
+		['visibility'] = '',
+		['alpha'] = '',
+	},
 }
 end
 
@@ -30,6 +35,11 @@ P.actionbar['combatstate']['barPet'] = {
 		['visibility'] = P.actionbar['barPet']['visibility'],
 		['alpha'] = P.actionbar['barPet']['alpha'],
 	},
+	['lastSaved'] = {
+		['mouseover'] = '',
+		['visibility'] = '',
+		['alpha'] = '',
+	},	
 }
 
 P.actionbar['combatstate']['stanceBar'] = {
@@ -41,5 +51,9 @@ P.actionbar['combatstate']['stanceBar'] = {
 	["ooc"] = {
 		['mouseover'] = true,
 		['alpha'] = P.actionbar['stanceBar']['alpha'],
+	},
+	['lastSaved'] = {
+		['mouseover'] = '',
+		['alpha'] = '',
 	},
 }
