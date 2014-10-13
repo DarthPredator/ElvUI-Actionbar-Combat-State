@@ -62,9 +62,9 @@ function ABCS:LeavingCombat(force, x)
 				AB:PositionAndSizeBarPet()
 				AB:UpdateButtonSettings()
 			else
-				E.db.actionbar.barPet['visibility'] = P.actionbar.barPet['visibility']
-				E.db.actionbar.barPet['mouseover'] = P.actionbar.barPet['mouseover']
-				E.db.actionbar.barPet['alpha'] = P.actionbar.barPet['alpha']
+				E.db.actionbar.barPet['visibility'] = E.db.actionbar.combatstate.barPet.lastSaved.visibility
+				E.db.actionbar.barPet['mouseover'] = E.db.actionbar.combatstate.barPet.lastSaved.mouseover
+				E.db.actionbar.barPet['alpha'] = E.db.actionbar.combatstate.barPet.lastSaved.alpha
 				AB:PositionAndSizeBarPet()
 				AB:UpdateButtonSettings()
 			end
@@ -75,8 +75,8 @@ function ABCS:LeavingCombat(force, x)
 				AB:PositionAndSizeBarShapeShift()
 				AB:UpdateButtonSettings()
 			else
-				E.db.actionbar.stanceBar['mouseover'] = P.actionbar.stanceBar['mouseover']
-				E.db.actionbar.stanceBar['alpha'] = P.actionbar.stanceBar['alpha']
+				E.db.actionbar.stanceBar['mouseover'] = E.db.actionbar.combatstate.stanceBar.lastSaved.mouseover
+				E.db.actionbar.stanceBar['alpha'] = E.db.actionbar.combatstate.stanceBar.lastSaved.alpha
 				AB:PositionAndSizeBarShapeShift()
 				AB:UpdateButtonSettings()
 			end
@@ -88,9 +88,9 @@ function ABCS:LeavingCombat(force, x)
 				AB:PositionAndSizeBar('bar'..x)
 				AB:UpdateButtonSettings()
 			else
-				E.db.actionbar['bar'..x]['visibility'] = P.actionbar['bar'..x]['visibility']
-				E.db.actionbar['bar'..x]['mouseover'] = P.actionbar['bar'..x]['mouseover']
-				E.db.actionbar['bar'..x]['alpha'] = P.actionbar['bar'..x]['alpha']
+				E.db.actionbar['bar'..x]['visibility'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['visibility']
+				E.db.actionbar['bar'..x]['mouseover'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['mouseover']
+				E.db.actionbar['bar'..x]['alpha'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['alpha'] 
 				AB:PositionAndSizeBar('bar'..x)
 				AB:UpdateButtonSettings()
 			end
@@ -235,6 +235,27 @@ function ABCS:MouseOverOption(i)
 					end,
 				}
 			end
+		end
+	end
+end
+
+function ABCS:SettingsUpdate(i)
+	if i == "pet" then
+		if E.db.actionbar.combatstate.barPet['enable'] then
+			E.db.actionbar.combatstate.barPet.lastSaved.mouseover = E.db.actionbar.barPet.mouseover
+			E.db.actionbar.combatstate.barPet.lastSaved.visibility = E.db.actionbar.barPet.visibility
+			E.db.actionbar.combatstate.barPet.lastSaved.alpha = E.db.actionbar.barPet.alpha
+		end
+	elseif i == "stance" then
+		if E.db.actionbar.combatstate.stanceBar['enable'] then
+			E.db.actionbar.combatstate.stanceBar.lastSaved.mouseover = E.db.actionbar.stanceBar.mouseover
+			E.db.actionbar.combatstate.stanceBar.lastSaved.alpha = E.db.actionbar.stanceBar.alpha
+		end
+	else
+		if E.db.actionbar.combatstate['bar'..i]['enable'] then
+			E.db.actionbar.combatstate['bar'..i]['lastSaved']['visibility'] = E.db.actionbar['bar'..i]['visibility']
+			E.db.actionbar.combatstate['bar'..i]['lastSaved']['mouseover'] = E.db.actionbar['bar'..i]['mouseover']
+			E.db.actionbar.combatstate['bar'..i]['lastSaved']['alpha'] = E.db.actionbar['bar'..i]['alpha']
 		end
 	end
 end
