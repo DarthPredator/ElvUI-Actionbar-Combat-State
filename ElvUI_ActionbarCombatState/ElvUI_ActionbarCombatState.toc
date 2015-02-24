@@ -1,7 +1,7 @@
-## Interface: 60000
+## Interface: 60100
 ## Title: |cff1784d1ElvUI |r Actionbar Combat State
 ## Author: Darth Predator
-## Version: 1.4
+## Version: 1.41
 ## Notes: Plugin allowing |cff1784d1ElvUI|r's actionbars to have separate visual conditions in and out of combat.
 ## Notes-ruRU: Плагин, позволяющий панелям действий |cff1784d1ElvUI|r иметь разные условия видимости в зависимости от участия в бою. 
 ## eMail: darthpred@gmail.com
