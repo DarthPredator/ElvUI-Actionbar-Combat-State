@@ -1,7 +1,6 @@
 local E, L, V, P, G, _ = unpack(ElvUI);
 local ABCS = E:GetModule('ActionBarCS');
-local bars
-
+local IsAddOnLoaded = IsAddOnLoaded
 --Options
 local function ABConf(bars)
 	for i=1, bars do
@@ -100,7 +99,7 @@ local function ABConf(bars)
 		}
 	end
 	E.Options.args.actionbar.args.combatstate.args.barPet = {
-		order = i,
+		order = 11,
 		name = L['Pet Bar'],
 		type = 'group',
 		order = 15,
@@ -192,7 +191,7 @@ local function ABConf(bars)
 		},
 	}
 	E.Options.args.actionbar.args.combatstate.args.stanceBar = {
-		order = i,
+		order = 12,
 		name = L['Stance Bar'],
 		type = 'group',
 		order = 20,
@@ -269,7 +268,7 @@ local function ABConf(bars)
 end
 
 
-function ABCSGetOptions()
+function ABCS:GetOptions()
 E.Options.args.actionbar.args.combatstate = {
 	type = 'group',
 	order = 13,
@@ -289,7 +288,6 @@ E.Options.args.actionbar.args.combatstate = {
 	},
 }
 
-bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
-
+local bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
 ABConf(bars)
 end

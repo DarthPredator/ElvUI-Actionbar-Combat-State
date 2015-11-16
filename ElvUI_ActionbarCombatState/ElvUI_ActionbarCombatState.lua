@@ -4,6 +4,7 @@ local AB = E:GetModule('ActionBars');
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addon = ...
 local bars
+local IsAddOnLoaded = IsAddOnLoaded
 
 function ABCS:EnteringCombat()
 	for i = 1, bars do
@@ -131,7 +132,7 @@ function ABCS:MouseOverOption(i)
 				width = 'full',
 				multiline = true,
 				get = function(info) return E.db.actionbar.barPet['visibility'] end,
-				set = function(info, value) 						
+				set = function(info, value)
 					E.db.actionbar['barPet']['visibility'] = value; 
 					AB:UpdateButtonSettings()
 				end,
@@ -192,7 +193,7 @@ function ABCS:MouseOverOption(i)
 					width = 'full',
 					multiline = true,
 					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
-					set = function(info, value) 						
+					set = function(info, value)
 						E.db.actionbar['bar'..i]['visibility'] = value; 
 						AB:UpdateButtonSettings()
 					end,
@@ -229,7 +230,7 @@ function ABCS:MouseOverOption(i)
 					width = 'full',
 					multiline = true,
 					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
-					set = function(info, value) 						
+					set = function(info, value)
 						E.db.actionbar['bar'..i]['visibility'] = value; 
 						AB:UpdateButtonSettings()
 					end,
@@ -264,7 +265,7 @@ function ABCS:Initialize()
 	bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnteringCombat")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "LeavingCombat")
-	EP:RegisterPlugin(addon,ABCSGetOptions)
+	EP:RegisterPlugin(addon,ABCS.GetOptions)
 
 	for i = 1, bars do
 		ABCS:MouseOverOption(i)
