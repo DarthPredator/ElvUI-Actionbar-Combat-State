@@ -10,3 +10,4 @@ L["In Combat"] = "В бою"
 L["Conditions below will take effet when entering combat."] = "Эти условия будут применяться при вступлении в бой."
 L["Out of Combat"] = "Вне боя"
 L["Conditions below will take effet when leaving combat."] = "Эти условия будут применяться при выходе из боя."
+L["Full Alpha On Mouse Over"] = true

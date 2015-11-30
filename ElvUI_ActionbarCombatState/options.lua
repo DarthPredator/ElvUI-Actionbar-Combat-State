@@ -19,8 +19,15 @@ local function ABConf(bars)
 					get = function(info) return E.db.actionbar.combatstate['bar'..i]['enable'] end,
 					set = function(info, value) E.db.actionbar.combatstate['bar'..i]['enable'] = value; ABCS:MouseOverOption(i); ABCS:SettingsUpdate(i); ABCS:LeavingCombat(true, i) end
 				},
-				ic = {
+				fullAlphaOnMouseOver = {
 					order = 2,
+					type = "toggle",
+					name = L["Full Alpha On Mouse Over"],
+					get = function(info) return E.db.actionbar.combatstate["bar"..i]['fullAlphaOnMouseOver'] end,
+					set = function(info, value) E.db.actionbar.combatstate["bar"..i]['fullAlphaOnMouseOver'] = value; ABCS:UpdateHooks("bar"..i) end,
+				},
+				ic = {
+					order = 3,
 					name = L["In Combat"],
 					type = 'group',
 					guiInline = true,
@@ -57,7 +64,7 @@ local function ABConf(bars)
 					},
 				},
 				ooc = {
-					order = 3,
+					order = 4,
 					name = L["Out of Combat"],
 					type = 'group',
 					guiInline = true,
@@ -112,8 +119,15 @@ local function ABConf(bars)
 				get = function(info) return E.db.actionbar.combatstate.barPet['enable'] end,
 				set = function(info, value) E.db.actionbar.combatstate.barPet['enable'] = value; ABCS:MouseOverOption("pet"); ABCS:SettingsUpdate("pet"); ABCS:LeavingCombat(true, "pet") end
 			},
-			ic = {
+			fullAlphaOnMouseOver = {
 				order = 2,
+				type = "toggle",
+				name = L["Full Alpha On Mouse Over"],
+				get = function(info) return E.db.actionbar.combatstate["barPet"]['fullAlphaOnMouseOver'] end,
+				set = function(info, value) E.db.actionbar.combatstate["barPet"]['fullAlphaOnMouseOver'] = value; ABCS:UpdateHooks("barPet") end,
+			},
+			ic = {
+				order = 3,
 				name = L["In Combat"],
 				type = 'group',
 				guiInline = true,
@@ -150,7 +164,7 @@ local function ABConf(bars)
 				},
 			},
 			ooc = {
-				order = 3,
+				order = 4,
 				name = L["Out of Combat"],
 				type = 'group',
 				guiInline = true,
@@ -204,8 +218,15 @@ local function ABConf(bars)
 				get = function(info) return E.db.actionbar.combatstate.stanceBar['enable'] end,
 				set = function(info, value) E.db.actionbar.combatstate.stanceBar['enable'] = value; ABCS:MouseOverOption("stance"); ABCS:SettingsUpdate("stance"); ABCS:LeavingCombat(true, "stance") end
 			},
-			ic = {
+			fullAlphaOnMouseOver = {
 				order = 2,
+				type = "toggle",
+				name = L["Full Alpha On Mouse Over"],
+				get = function(info) return E.db.actionbar.combatstate["stanceBar"]['fullAlphaOnMouseOver'] end,
+				set = function(info, value) E.db.actionbar.combatstate["stanceBar"]['fullAlphaOnMouseOver'] = value; ABCS:UpdateHooks("stanceBar") end,
+			},
+			ic = {
+				order = 3,
 				name = L["In Combat"],
 				type = 'group',
 				guiInline = true,
@@ -234,7 +255,7 @@ local function ABConf(bars)
 				},
 			},
 			ooc = {
-				order = 3,
+				order = 4,
 				name = L["Out of Combat"],
 				type = 'group',
 				guiInline = true,
