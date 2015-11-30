@@ -10,3 +10,4 @@ L["In Combat"] = true
 L["Conditions below will take effet when entering combat."] = true
 L["Out of Combat"] = true
 L["Conditions below will take effet when leaving combat."] = true
+L["Full Alpha On Mouse Over"] = true

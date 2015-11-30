@@ -194,7 +194,7 @@ function ABCS:MouseOverOption(i)
 					multiline = true,
 					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
 					set = function(info, value)
-						E.db.actionbar['bar'..i]['visibility'] = value; 
+						E.db.actionbar['bar'..i]['visibility'] = value;
 						AB:UpdateButtonSettings()
 					end,
 				}
@@ -261,6 +261,114 @@ function ABCS:SettingsUpdate(i)
 	end
 end
 
+function ABCS:Bar_OnEnter(bar)
+	E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
+end
+
+function ABCS:Bar_OnLeave(bar)
+	E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
+end
+
+function ABCS:Button_OnEnter(button)
+	local bar = button:GetParent()
+	E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
+end
+
+function ABCS:Button_OnLeave(button)
+	local bar = button:GetParent()
+	E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
+end
+
+local function HookBar(bar)
+	ABCS:HookScript(bar, "OnEnter", "Bar_OnEnter")
+	ABCS:HookScript(bar, "OnLeave", "Bar_OnLeave")
+	for i=1, NUM_ACTIONBAR_BUTTONS do
+		local button = bar.buttons[i]
+		ABCS:HookScript(button, "OnEnter", "Button_OnEnter")
+		ABCS:HookScript(button, "OnLeave", "Button_OnLeave")
+	end
+end
+
+local function UnhookBar(bar)
+	ABCS:Unhook(bar, "OnEnter")
+	ABCS:Unhook(bar, "OnLeave")
+	for i=1, NUM_ACTIONBAR_BUTTONS do
+		local button = bar.buttons[i]
+		ABCS:Unhook(button, "OnEnter")
+		ABCS:Unhook(button, "OnLeave")
+	end
+end
+
+local function HookPet(bar)
+	ABCS:HookScript(bar, "OnEnter", "Bar_OnEnter")
+	ABCS:HookScript(bar, "OnLeave", "Bar_OnLeave")
+	for i=1, NUM_PET_ACTION_SLOTS do
+		local button = _G["PetActionButton"..i]
+		ABCS:HookScript(button, "OnEnter", "Button_OnEnter")
+		ABCS:HookScript(button, "OnLeave", "Button_OnLeave")
+	end
+end
+
+local function UnhookPet(bar)
+	ABCS:Unhook(bar, "OnEnter")
+	ABCS:Unhook(bar, "OnLeave")
+	for i=1, NUM_PET_ACTION_SLOTS do
+		local button = _G["PetActionButton"..i]
+		ABCS:Unhook(button, "OnEnter")
+		ABCS:Unhook(button, "OnLeave")
+	end
+end
+
+local function HookStance(bar)
+	ABCS:HookScript(bar, "OnEnter", "Bar_OnEnter")
+	ABCS:HookScript(bar, "OnLeave", "Bar_OnLeave")
+	for i=1, NUM_STANCE_SLOTS do
+		local button = bar.buttons[i]
+		ABCS:HookScript(button, "OnEnter", "Button_OnEnter")
+		ABCS:HookScript(button, "OnLeave", "Button_OnLeave")
+	end
+end
+
+local function UnhookStance(bar)
+	ABCS:Unhook(bar, "OnEnter")
+	ABCS:Unhook(bar, "OnLeave")
+	for i=1, NUM_STANCE_SLOTS do
+		local button = bar.buttons[i]
+		ABCS:Unhook(button, "OnEnter")
+		ABCS:Unhook(button, "OnLeave")
+	end
+end
+
+function ABCS:UpdateHooks(barName)
+	local bar
+	if barName == "barPet" then
+		bar = _G["ElvUI_BarPet"]
+	elseif barName == "stanceBar" then
+		bar = _G["ElvUI_StanceBar"]
+	else
+		bar = AB["handledBars"][barName]
+	end
+	if not bar then return; end
+
+	if E.db.actionbar.combatstate[barName].fullAlphaOnMouseOver then
+		if barName == "barPet" then
+			HookPet(bar)
+		elseif barName == "stanceBar" then
+			HookStance(bar)
+		else
+			HookBar(bar)
+		end
+	else
+		if barName == "barPet" then
+			UnhookPet(bar)
+		elseif barName == "stanceBar" then
+			UnhookStance(bar)
+		else
+			UnhookBar(bar)
+		end
+	end
+end
+
 function ABCS:Initialize()
 	bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnteringCombat")
@@ -269,7 +377,10 @@ function ABCS:Initialize()
 
 	for i = 1, bars do
 		ABCS:MouseOverOption(i)
+		self:UpdateHooks("bar"..i)
 	end
+	self:UpdateHooks("barPet")
+	self:UpdateHooks("stanceBar")
 end
 
 E:RegisterModule(ABCS:GetName())
