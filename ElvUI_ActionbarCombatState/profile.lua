@@ -20,7 +20,7 @@ P.actionbar['combatstate']["bar"..i] = {
 		['visibility'] = '',
 		['alpha'] = '',
 	},
-	["fullAlphaOnMouseOver"] = true,
+	["fullAlphaOnMouseOver"] = false,
 }
 end
 
@@ -41,7 +41,7 @@ P.actionbar['combatstate']['barPet'] = {
 		['visibility'] = '',
 		['alpha'] = '',
 	},
-	["fullAlphaOnMouseOver"] = true,
+	["fullAlphaOnMouseOver"] = false,
 }
 
 P.actionbar['combatstate']['stanceBar'] = {
@@ -58,5 +58,5 @@ P.actionbar['combatstate']['stanceBar'] = {
 		['mouseover'] = '',
 		['alpha'] = '',
 	},
-	["fullAlphaOnMouseOver"] = true,
+	["fullAlphaOnMouseOver"] = false,
 }
