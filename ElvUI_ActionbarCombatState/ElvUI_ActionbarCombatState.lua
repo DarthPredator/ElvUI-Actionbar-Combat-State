@@ -5,6 +5,10 @@ local EP = LibStub("LibElvUIPlugin-1.0")
 local addon = ...
 local bars
 local IsAddOnLoaded = IsAddOnLoaded
+local _G = _G
+local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
+local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
+local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
 
 function ABCS:EnteringCombat()
 	for i = 1, bars do
