@@ -11,3 +11,6 @@ L["Conditions below will take effet when entering combat."] = "Эти услов
 L["Out of Combat"] = "Вне боя"
 L["Conditions below will take effet when leaving combat."] = "Эти условия будут применяться при выходе из боя."
 L["Full Alpha On Mouse Over"] = "Отклюить прозрачность при наведении"
+L["Forces the bar to set alpha to 100% when under the cursor. Does not affect bars with mouseover on."] = "Принудительно делает панель полностью непрозрачной при наведении мыши. Не работает на панели с активной опцией \"при наведении\"."
+L["Full Alpha On Mouse Over (Global)"] = "Отклюить прозрачность при наведении (глобально)"
+L["Forces all bars to set alpha to 100% when mouse over any bar. Does not affect bars with mouseover on."] = "Принудительно делает все панели полностью непрозрачными при наведении мыши на любую из них. Не работает на панели с активной опцией \"при наведении\"."

@@ -23,6 +23,8 @@ local function ABConf(bars)
 					order = 2,
 					type = "toggle",
 					name = L["Full Alpha On Mouse Over"],
+					disabled = function() return E.private.combatstate.GlobalFullAlpha end,
+					desc = L["Forces the bar to set alpha to 100% when under the cursor. Does not affect bars with mouseover on."],
 					get = function(info) return E.db.actionbar.combatstate["bar"..i]['fullAlphaOnMouseOver'] end,
 					set = function(info, value) E.db.actionbar.combatstate["bar"..i]['fullAlphaOnMouseOver'] = value; ABCS:UpdateHooks("bar"..i) end,
 				},
@@ -123,6 +125,8 @@ local function ABConf(bars)
 				order = 2,
 				type = "toggle",
 				name = L["Full Alpha On Mouse Over"],
+				desc = L["Forces the bar to set alpha to 100% when under the cursor. Does not affect bars with mouseover on."],
+				disabled = function() return E.private.combatstate.GlobalFullAlpha end,
 				get = function(info) return E.db.actionbar.combatstate["barPet"]['fullAlphaOnMouseOver'] end,
 				set = function(info, value) E.db.actionbar.combatstate["barPet"]['fullAlphaOnMouseOver'] = value; ABCS:UpdateHooks("barPet") end,
 			},
@@ -222,6 +226,8 @@ local function ABConf(bars)
 				order = 2,
 				type = "toggle",
 				name = L["Full Alpha On Mouse Over"],
+				desc = L["Forces the bar to set alpha to 100% when under the cursor. Does not affect bars with mouseover on."],
+				disabled = function() return E.private.combatstate.GlobalFullAlpha end,
 				get = function(info) return E.db.actionbar.combatstate["stanceBar"]['fullAlphaOnMouseOver'] end,
 				set = function(info, value) E.db.actionbar.combatstate["stanceBar"]['fullAlphaOnMouseOver'] = value; ABCS:UpdateHooks("stanceBar") end,
 			},
@@ -305,6 +311,16 @@ E.Options.args.actionbar.args.combatstate = {
 			order = 2,
 			type = 'description',
 			name = L["OOC_DESC"],
+		},
+		globalForceAlpha = {
+			order = 3,
+			type = "toggle",
+			name = L["Full Alpha On Mouse Over (Global)"],
+			desc = L["Forces all bars to set alpha to 100% when mouse over any bar. Does not affect bars with mouseover on."],
+			get = function(info) return E.private.combatstate.GlobalFullAlpha end,
+			set = function(info, value) E.private.combatstate.GlobalFullAlpha = value;
+				E:StaticPopup_Show("PRIVATE_RL")
+			end,
 		},
 	},
 }

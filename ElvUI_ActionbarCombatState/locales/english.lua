@@ -11,3 +11,6 @@ L["Conditions below will take effet when entering combat."] = true
 L["Out of Combat"] = true
 L["Conditions below will take effet when leaving combat."] = true
 L["Full Alpha On Mouse Over"] = true
+L["Forces the bar to set alpha to 100% when under the cursor. Does not affect bars with mouseover on."] = true
+L["Full Alpha On Mouse Over (Global)"] = true
+L["Forces all bars to set alpha to 100% when mouse over any bar. Does not affect bars with mouseover on."] = true

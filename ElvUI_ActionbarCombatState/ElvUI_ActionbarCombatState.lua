@@ -266,49 +266,115 @@ function ABCS:SettingsUpdate(i)
 end
 
 function ABCS:Bar_OnEnter(bar)
-	if bar.db.mouseover then return end
-	E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
-	if bar == _G["ElvUI_StanceBar"] then
-		local button
-		for i=1, NUM_STANCE_SLOTS do
-			button = bar.buttons[i] 
-			E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), 1)
+	if E.private.combatstate.GlobalFullAlpha then
+		for i = 1, bars do
+			if not AB["handledBars"]["bar"..i].db.mouseover then
+				E:UIFrameFadeIn(AB["handledBars"]["bar"..i], 0.2, AB["handledBars"]["bar"..i]:GetAlpha(), 1)
+			end
+		end
+		if not _G["ElvUI_BarPet"].db.mouseover then E:UIFrameFadeIn(_G["ElvUI_BarPet"], 0.2, _G["ElvUI_BarPet"]:GetAlpha(), 1) end
+		if not _G["ElvUI_StanceBar"].db.mouseover then
+			E:UIFrameFadeIn(_G["ElvUI_StanceBar"], 0.2, _G["ElvUI_StanceBar"]:GetAlpha(), 1)
+			for j=1, NUM_STANCE_SLOTS do
+				buttonS = _G["ElvUI_StanceBar"].buttons[j]
+				E:UIFrameFadeIn(buttonS, 0.2, buttonS:GetAlpha(), 1)
+			end
+		end
+	else
+		if bar.db.mouseover then return end
+		E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
+		if bar == _G["ElvUI_StanceBar"] then
+			local button
+			for i=1, NUM_STANCE_SLOTS do
+				button = bar.buttons[i] 
+				E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), 1)
+			end
 		end
 	end
 end
 
 function ABCS:Bar_OnLeave(bar)
-	if bar.db.mouseover then return end
-	E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
-	if bar == _G["ElvUI_StanceBar"] then
-		local button
-		for i=1, NUM_STANCE_SLOTS do
-			button = bar.buttons[i]
-			E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), bar.db.alpha)
+	if E.private.combatstate.GlobalFullAlpha then
+		for i = 1, bars do
+			if not AB["handledBars"]["bar"..i].db.mouseover then
+				E:UIFrameFadeIn(AB["handledBars"]["bar"..i], 0.2, AB["handledBars"]["bar"..i]:GetAlpha(), AB["handledBars"]["bar"..i].db.alpha)
+			end
+		end
+		if not _G["ElvUI_BarPet"].db.mouseover then E:UIFrameFadeIn(_G["ElvUI_BarPet"], 0.2, _G["ElvUI_BarPet"]:GetAlpha(), _G["ElvUI_BarPet"].db.alpha) end
+		if not _G["ElvUI_StanceBar"].db.mouseover then
+			E:UIFrameFadeIn(_G["ElvUI_StanceBar"], 0.2, _G["ElvUI_StanceBar"]:GetAlpha(), _G["ElvUI_StanceBar"].db.alpha)
+			local buttonS
+			for j=1, NUM_STANCE_SLOTS do
+				buttonS = _G["ElvUI_StanceBar"].buttons[j]
+				E:UIFrameFadeIn(buttonS, 0.2, buttonS:GetAlpha(), bar.db.alpha)
+			end
+		end
+	else
+		if bar.db.mouseover then return end
+		E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
+		if bar == _G["ElvUI_StanceBar"] then
+			local button
+			for i=1, NUM_STANCE_SLOTS do
+				button = bar.buttons[i]
+				E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), bar.db.alpha)
+			end
 		end
 	end
 end
 
 function ABCS:Button_OnEnter(button)
+	local buttonS
 	local bar = button:GetParent()
-	if bar.db.mouseover then return end
-	E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
-	if bar == _G["ElvUI_StanceBar"] then
-		for i=1, NUM_STANCE_SLOTS do
-			button = bar.buttons[i]
-			E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), 1)
+	if E.private.combatstate.GlobalFullAlpha then
+		for i = 1, bars do
+			if AB["handledBars"]["bar"..i].db.mouseover then return end
+			E:UIFrameFadeIn(AB["handledBars"]["bar"..i], 0.2, AB["handledBars"]["bar"..i]:GetAlpha(), 1)
+		end
+		if not _G["ElvUI_BarPet"].db.mouseover then E:UIFrameFadeIn(_G["ElvUI_BarPet"], 0.2, _G["ElvUI_BarPet"]:GetAlpha(), 1) end
+		if not _G["ElvUI_StanceBar"].db.mouseover then
+			E:UIFrameFadeIn(_G["ElvUI_StanceBar"], 0.2, _G["ElvUI_StanceBar"]:GetAlpha(), 1)
+			for j=1, NUM_STANCE_SLOTS do
+				buttonS = _G["ElvUI_StanceBar"].buttons[j]
+				E:UIFrameFadeIn(buttonS, 0.2, buttonS:GetAlpha(), 1)
+			end
+		end
+	else
+		-- local bar = button:GetParent()
+		if bar.db.mouseover then return end
+		E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
+		if bar == _G["ElvUI_StanceBar"] then
+			for i=1, NUM_STANCE_SLOTS do
+				buttonS = bar.buttons[i]
+				E:UIFrameFadeIn(buttonS, 0.2, buttonS:GetAlpha(), 1)
+			end
 		end
 	end
 end
 
 function ABCS:Button_OnLeave(button)
+	local buttonS
 	local bar = button:GetParent()
-	if bar.db.mouseover then return end
-	E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
-	if bar == _G["ElvUI_StanceBar"] then
-		for i=1, NUM_STANCE_SLOTS do
-			button = bar.buttons[i]
-			E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), bar.db.alpha)
+	if E.private.combatstate.GlobalFullAlpha then
+		for i = 1, bars do
+			if AB["handledBars"]["bar"..i].db.mouseover then return end
+			E:UIFrameFadeIn(AB["handledBars"]["bar"..i], 0.2, AB["handledBars"]["bar"..i]:GetAlpha(), AB["handledBars"]["bar"..i].db.alpha)
+		end
+		E:UIFrameFadeIn(_G["ElvUI_BarPet"], 0.2, _G["ElvUI_BarPet"]:GetAlpha(), _G["ElvUI_BarPet"].db.alpha)
+		if not _G["ElvUI_StanceBar"].db.mouseover then
+			E:UIFrameFadeIn(_G["ElvUI_StanceBar"], 0.2, _G["ElvUI_StanceBar"]:GetAlpha(), _G["ElvUI_StanceBar"].db.alpha)
+			for j=1, NUM_STANCE_SLOTS do
+				buttonS = _G["ElvUI_StanceBar"].buttons[j]
+				E:UIFrameFadeIn(buttonS, 0.2, buttonS:GetAlpha(), bar.db.alpha)
+			end
+		end
+	else
+		if bar.db.mouseover then return end
+		E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
+		if bar == _G["ElvUI_StanceBar"] then
+			for i=1, NUM_STANCE_SLOTS do
+				buttonS = bar.buttons[i]
+				E:UIFrameFadeIn(buttonS, 0.2, buttonS:GetAlpha(), bar.db.alpha)
+			end
 		end
 	end
 end
@@ -374,6 +440,7 @@ local function UnhookStance(bar)
 end
 
 function ABCS:UpdateHooks(barName)
+	print(barName, E.db.actionbar.combatstate[barName].fullAlphaOnMouseOver, E.db.actionbar.combatstate.GlobalFullAlpha)
 	local bar
 	if barName == "barPet" then
 		bar = _G["ElvUI_BarPet"]
@@ -384,7 +451,7 @@ function ABCS:UpdateHooks(barName)
 	end
 	if not bar then return; end
 
-	if E.db.actionbar.combatstate[barName].fullAlphaOnMouseOver then
+	if E.db.actionbar.combatstate[barName].fullAlphaOnMouseOver or E.private.combatstate.GlobalFullAlpha then
 		if barName == "barPet" then
 			HookPet(bar)
 		elseif barName == "stanceBar" then
@@ -401,6 +468,14 @@ function ABCS:UpdateHooks(barName)
 			UnhookBar(bar)
 		end
 	end
+end
+
+function ABCS:GlobalAlpha()
+	for i = 1, bars do
+		self:UpdateHooks("bar"..i)
+	end
+	self:UpdateHooks("barPet")
+	self:UpdateHooks("stanceBar")
 end
 
 function ABCS:Initialize()
