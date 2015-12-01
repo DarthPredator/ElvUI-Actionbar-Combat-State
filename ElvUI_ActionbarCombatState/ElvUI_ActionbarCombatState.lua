@@ -269,6 +269,7 @@ function ABCS:Bar_OnEnter(bar)
 	if bar.db.mouseover then return end
 	E:UIFrameFadeIn(bar, 0.2, bar:GetAlpha(), 1)
 	if bar == _G["ElvUI_StanceBar"] then
+		local button
 		for i=1, NUM_STANCE_SLOTS do
 			button = bar.buttons[i] 
 			E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), 1)
@@ -280,6 +281,7 @@ function ABCS:Bar_OnLeave(bar)
 	if bar.db.mouseover then return end
 	E:UIFrameFadeOut(bar, 0.2, bar:GetAlpha(), bar.db.alpha)
 	if bar == _G["ElvUI_StanceBar"] then
+		local button
 		for i=1, NUM_STANCE_SLOTS do
 			button = bar.buttons[i]
 			E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), bar.db.alpha)
