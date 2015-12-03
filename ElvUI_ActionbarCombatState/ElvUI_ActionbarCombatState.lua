@@ -440,7 +440,6 @@ local function UnhookStance(bar)
 end
 
 function ABCS:UpdateHooks(barName)
-	print(barName, E.db.actionbar.combatstate[barName].fullAlphaOnMouseOver, E.db.actionbar.combatstate.GlobalFullAlpha)
 	local bar
 	if barName == "barPet" then
 		bar = _G["ElvUI_BarPet"]
