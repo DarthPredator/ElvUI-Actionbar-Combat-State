@@ -266,6 +266,7 @@ function ABCS:SettingsUpdate(i)
 end
 
 function ABCS:Bar_OnEnter(bar)
+	local buttonS
 	if E.private.combatstate.GlobalFullAlpha then
 		for i = 1, bars do
 			if not AB["handledBars"]["bar"..i].db.mouseover then
