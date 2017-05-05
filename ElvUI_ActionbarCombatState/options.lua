@@ -72,6 +72,7 @@ local function ABConf(bars)
 					guiInline = true,
 					disabled = function() return not E.db.actionbar.combatstate['bar'..i]['enable'] end,
 					get = function(info) return E.db.actionbar.combatstate['bar'..i]['ooc'][ info[#info] ] end,
+					set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc'][ info[#info] ]  = value; ABCS:LeavingCombat() end,
 					args = {
 						intro = {
 							order = 1,
@@ -83,7 +84,6 @@ local function ABConf(bars)
 							order = 2,
 							name = L['Mouseover'],
 							desc = L['The frame is not shown unless you mouse over the frame.'],
-							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
 						},
 						alpha = {
 							order = 3,
@@ -91,7 +91,6 @@ local function ABConf(bars)
 							name = L['Alpha'],
 							isPercent = true,
 							min = 0, max = 1, step = 0.01,
-							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['alpha'] = value; ABCS:LeavingCombat() end,
 						},
 						visibility = {
 							type = 'input',
@@ -100,7 +99,6 @@ local function ABConf(bars)
 							desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
 							width = 'full',
 							multiline = true,
-							set = function(info, value) E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover'] = value; ABCS:LeavingCombat() end,
 						},
 					},
 				},
