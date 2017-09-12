@@ -14,7 +14,3 @@ locales\load_locales.xml
 profile.lua
 ElvUI_ActionbarCombatState.lua
 options.lua
- 
- 
-## X-Tukui-ProjectID: 220
-## X-Tukui-ProjectFolders: ElvUI_ActionbarCombatState
