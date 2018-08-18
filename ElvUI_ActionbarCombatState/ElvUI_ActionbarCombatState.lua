@@ -10,28 +10,52 @@ local NUM_ACTIONBAR_BUTTONS = NUM_ACTIONBAR_BUTTONS
 local NUM_PET_ACTION_SLOTS = NUM_PET_ACTION_SLOTS
 local NUM_STANCE_SLOTS = NUM_STANCE_SLOTS
 
+function ABCS:UpdateBarSettings(barName)
+	local bar
+	if barName == "barPet" then
+		bar = _G["ElvUI_BarPet"]
+	elseif barName == "stanceBar" then
+		bar = _G["ElvUI_StanceBar"]
+	else
+		bar = AB["handledBars"][barName]
+	end
+	if not bar then return; end
+
+	local db = E.db.actionbar[barName];
+
+	if not db then return end
+
+	if (db.visibility) then
+		RegisterStateDriver(bar, 'visibility', db.visibility);
+	end
+
+	bar.mouseover = db.mouseover;
+	if bar.mouseover then
+		bar:SetAlpha(0);
+	else
+		bar:SetAlpha(db.alpha);
+	end
+end
+
 function ABCS:EnteringCombat()
 	for i = 1, bars do
 		if E.db.actionbar.combatstate['bar'..i]['enable'] then
 			E.db.actionbar['bar'..i]['visibility'] = E.db.actionbar.combatstate['bar'..i]['ic']['visibility']
 			E.db.actionbar['bar'..i]['mouseover'] = E.db.actionbar.combatstate['bar'..i]['ic']['mouseover']
 			E.db.actionbar['bar'..i]['alpha'] = E.db.actionbar.combatstate['bar'..i]['ic']['alpha']
-			AB:PositionAndSizeBar('bar'..i)
-			AB:UpdateButtonSettings()
+			self:UpdateBarSettings('bar'..i);
 		end
 	end
 	if E.db.actionbar.combatstate.barPet.enable then
 		E.db.actionbar.barPet['visibility'] = E.db.actionbar.combatstate.barPet['ic']['visibility']
 		E.db.actionbar.barPet['mouseover'] = E.db.actionbar.combatstate.barPet['ic']['mouseover']
 		E.db.actionbar.barPet['alpha'] = E.db.actionbar.combatstate.barPet['ic']['alpha']
-		AB:PositionAndSizeBarPet()
-		AB:UpdateButtonSettings()
+		self:UpdateBarSettings('barPet')
 	end
 	if E.db.actionbar.combatstate.stanceBar['enable'] then
 		E.db.actionbar.stanceBar['mouseover'] = E.db.actionbar.combatstate.stanceBar['ic']['mouseover']
 		E.db.actionbar.stanceBar['alpha'] = E.db.actionbar.combatstate.stanceBar['ic']['alpha']
-		AB:PositionAndSizeBarShapeShift()
-		AB:UpdateButtonSettings()
+		self:UpdateBarSettings('stanceBar');
 	end
 end
 
@@ -41,22 +65,19 @@ function ABCS:LeavingCombat(force, x)
 			E.db.actionbar['bar'..i]['visibility'] = E.db.actionbar.combatstate['bar'..i]['ooc']['visibility']
 			E.db.actionbar['bar'..i]['mouseover'] = E.db.actionbar.combatstate['bar'..i]['ooc']['mouseover']
 			E.db.actionbar['bar'..i]['alpha'] = E.db.actionbar.combatstate['bar'..i]['ooc']['alpha']
-			AB:PositionAndSizeBar('bar'..i)
-			AB:UpdateButtonSettings()
+			self:UpdateBarSettings('bar'..i);
 		end
 	end
 	if E.db.actionbar.combatstate.barPet.enable then
 		E.db.actionbar.barPet['visibility'] = E.db.actionbar.combatstate.barPet['ooc']['visibility']
 		E.db.actionbar.barPet['mouseover'] = E.db.actionbar.combatstate.barPet['ooc']['mouseover']
 		E.db.actionbar.barPet['alpha'] = E.db.actionbar.combatstate.barPet['ooc']['alpha']
-		AB:PositionAndSizeBarPet()
-		AB:UpdateButtonSettings()
+		self:UpdateBarSettings('barPet');
 	end
 	if E.db.actionbar.combatstate.stanceBar['enable'] then
 		E.db.actionbar.stanceBar['mouseover'] = E.db.actionbar.combatstate.stanceBar['ooc']['mouseover']
 		E.db.actionbar.stanceBar['alpha'] = E.db.actionbar.combatstate.stanceBar['ooc']['alpha']
-		AB:PositionAndSizeBarShapeShift()
-		AB:UpdateButtonSettings()
+		self:UpdateBarSettings('stanceBar');
 	end
 	if force and x then
 		if x == "pet" then
@@ -64,40 +85,34 @@ function ABCS:LeavingCombat(force, x)
 				E.db.actionbar.barPet['visibility'] = E.db.actionbar.combatstate.barPet['ooc']['visibility']
 				E.db.actionbar.barPet['mouseover'] = E.db.actionbar.combatstate.barPet['ooc']['mouseover']
 				E.db.actionbar.barPet['alpha'] = E.db.actionbar.combatstate.barPet['ooc']['alpha']
-				AB:PositionAndSizeBarPet()
-				AB:UpdateButtonSettings()
+				self:UpdateBarSettings('barPet');
 			else
 				E.db.actionbar.barPet['visibility'] = E.db.actionbar.combatstate.barPet.lastSaved.visibility
 				E.db.actionbar.barPet['mouseover'] = E.db.actionbar.combatstate.barPet.lastSaved.mouseover
 				E.db.actionbar.barPet['alpha'] = E.db.actionbar.combatstate.barPet.lastSaved.alpha
-				AB:PositionAndSizeBarPet()
-				AB:UpdateButtonSettings()
+				self:UpdateBarSettings('barPet');
 			end
 		elseif x == "stance" then
 			if E.db.actionbar.combatstate.stanceBar['enable'] then
 				E.db.actionbar.stanceBar['mouseover'] = E.db.actionbar.combatstate.stanceBar['ooc']['mouseover']
 				E.db.actionbar.stanceBar['alpha'] = E.db.actionbar.combatstate.stanceBar['ooc']['alpha']
-				AB:PositionAndSizeBarShapeShift()
-				AB:UpdateButtonSettings()
+				self:UpdateBarSettings('stanceBar');
 			else
 				E.db.actionbar.stanceBar['mouseover'] = E.db.actionbar.combatstate.stanceBar.lastSaved.mouseover
 				E.db.actionbar.stanceBar['alpha'] = E.db.actionbar.combatstate.stanceBar.lastSaved.alpha
-				AB:PositionAndSizeBarShapeShift()
-				AB:UpdateButtonSettings()
+				self:UpdateBarSettings('stanceBar');
 			end
 		else
 			if E.db.actionbar.combatstate['bar'..x]['enable'] then
 				E.db.actionbar['bar'..x]['visibility'] = E.db.actionbar.combatstate['bar'..x]['ooc']['visibility']
 				E.db.actionbar['bar'..x]['mouseover'] = E.db.actionbar.combatstate['bar'..x]['ooc']['mouseover']
 				E.db.actionbar['bar'..x]['alpha'] = E.db.actionbar.combatstate['bar'..x]['ooc']['alpha']
-				AB:PositionAndSizeBar('bar'..x)
-				AB:UpdateButtonSettings()
+				self:UpdateBarSettings('bar'..x);
 			else
 				E.db.actionbar['bar'..x]['visibility'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['visibility']
 				E.db.actionbar['bar'..x]['mouseover'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['mouseover']
 				E.db.actionbar['bar'..x]['alpha'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['alpha'] 
-				AB:PositionAndSizeBar('bar'..x)
-				AB:UpdateButtonSettings()
+				self:UpdateBarSettings('bar'..x);
 			end
 		end
 	end
@@ -117,7 +132,7 @@ function ABCS:MouseOverOption(i)
 				desc = L['The frame is not shown unless you mouse over the frame.'],
 				type = "toggle",
 				get = function(info) return E.db.actionbar.barPet['mouseover'] end,
-				set = function(info, value) E.db.actionbar.barPet['mouseover'] = value; AB:PositionAndSizeBarPet() end,
+				set = function(info, value) E.db.actionbar.barPet['mouseover'] = value; self:UpdateBarSettings('barPet'); end,
 			}
 			E.Options.args.actionbar.args.barPet['args']['alpha'] = {
 				order = 12,
@@ -126,7 +141,7 @@ function ABCS:MouseOverOption(i)
 				isPercent = true,
 				min = 0, max = 1, step = 0.01,
 				get = function(info) return E.db.actionbar.barPet['alpha'] end,
-				set = function(info, value) E.db.actionbar.barPet['alpha'] = value; AB:PositionAndSizeBarPet() end,
+				set = function(info, value) E.db.actionbar.barPet['alpha'] = value; self:UpdateBarSettings('barPet') end,
 			}
 			E.Options.args.actionbar.args.barPet['args']['visibility'] = {
 				type = 'input',
@@ -138,7 +153,7 @@ function ABCS:MouseOverOption(i)
 				get = function(info) return E.db.actionbar.barPet['visibility'] end,
 				set = function(info, value)
 					E.db.actionbar['barPet']['visibility'] = value; 
-					AB:UpdateButtonSettings()
+					self:UpdateBarSettings('barPet');
 				end,
 			}
 		end
@@ -153,7 +168,7 @@ function ABCS:MouseOverOption(i)
 				desc = L['The frame is not shown unless you mouse over the frame.'],
 				type = "toggle",
 				get = function(info) return E.db.actionbar.stanceBar['mouseover'] end,
-				set = function(info, value) E.db.actionbar.stanceBar['mouseover'] = value; AB:PositionAndSizeBarShapeShift() end,
+				set = function(info, value) E.db.actionbar.stanceBar['mouseover'] = value; self:UpdateBarSettings('stanceBar'); end,
 			}
 			E.Options.args.actionbar.args.stanceBar['args']['alpha'] = {
 				order = 12,
@@ -162,7 +177,7 @@ function ABCS:MouseOverOption(i)
 				isPercent = true,
 				min = 0, max = 1, step = 0.01,
 				get = function(info) return E.db.actionbar.stanceBar['alpha'] end,
-				set = function(info, value) E.db.actionbar.stanceBar['alpha'] = value; AB:PositionAndSizeBarShapeShift() end,
+				set = function(info, value) E.db.actionbar.stanceBar['alpha'] = value; self:UpdateBarSettings('stanceBar') end,
 			}
 		end
 	else
@@ -178,7 +193,7 @@ function ABCS:MouseOverOption(i)
 					desc = L['The frame is not shown unless you mouse over the frame.'],
 					type = "toggle",
 					get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; AB:PositionAndSizeBar('bar'..i) end,
+					set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; self:UpdateBarSettings('bar'..i) end,
 				}
 				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['alpha'] = {
 					order = 12,
@@ -187,7 +202,7 @@ function ABCS:MouseOverOption(i)
 					isPercent = true,
 					min = 0, max = 1, step = 0.01,
 					get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; AB:PositionAndSizeBar('bar'..i) end,
+					set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; self:UpdateBarSettings('bar'..i) end,
 				}
 				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['visibility'] = {
 					type = 'input',
@@ -199,7 +214,7 @@ function ABCS:MouseOverOption(i)
 					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
 					set = function(info, value)
 						E.db.actionbar['bar'..i]['visibility'] = value;
-						AB:UpdateButtonSettings()
+						self:UpdateBarSettings('bar'..i);
 					end,
 				}
 			end
@@ -215,7 +230,7 @@ function ABCS:MouseOverOption(i)
 					desc = L['The frame is not shown unless you mouse over the frame.'],
 					type = "toggle",
 					get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; AB:PositionAndSizeBar('bar'..i) end,
+					set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; self:UpdateBarSettings('bar'..i) end,
 				}
 				E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = {
 					order = 12,
@@ -224,7 +239,7 @@ function ABCS:MouseOverOption(i)
 					isPercent = true,
 					min = 0, max = 1, step = 0.01,
 					get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; AB:PositionAndSizeBar('bar'..i) end,
+					set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; self:UpdateBarSettings('bar'..i) end,
 				}
 				E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = {
 					type = 'input',
@@ -236,7 +251,7 @@ function ABCS:MouseOverOption(i)
 					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
 					set = function(info, value)
 						E.db.actionbar['bar'..i]['visibility'] = value; 
-						AB:UpdateButtonSettings()
+						self:UpdateBarSettings('bar'..i);
 					end,
 				}
 			end
