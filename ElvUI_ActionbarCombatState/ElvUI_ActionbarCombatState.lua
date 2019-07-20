@@ -111,7 +111,7 @@ function ABCS:LeavingCombat(force, x)
 			else
 				E.db.actionbar['bar'..x]['visibility'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['visibility']
 				E.db.actionbar['bar'..x]['mouseover'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['mouseover']
-				E.db.actionbar['bar'..x]['alpha'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['alpha'] 
+				E.db.actionbar['bar'..x]['alpha'] = E.db.actionbar.combatstate['bar'..x]['lastSaved']['alpha']
 				self:UpdateBarSettings('bar'..x);
 			end
 		end
@@ -152,7 +152,7 @@ function ABCS:MouseOverOption(i)
 				multiline = true,
 				get = function(info) return E.db.actionbar.barPet['visibility'] end,
 				set = function(info, value)
-					E.db.actionbar['barPet']['visibility'] = value; 
+					E.db.actionbar['barPet']['visibility'] = value;
 					self:UpdateBarSettings('barPet');
 				end,
 			}
@@ -250,7 +250,7 @@ function ABCS:MouseOverOption(i)
 					multiline = true,
 					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
 					set = function(info, value)
-						E.db.actionbar['bar'..i]['visibility'] = value; 
+						E.db.actionbar['bar'..i]['visibility'] = value;
 						self:UpdateBarSettings('bar'..i);
 					end,
 				}
@@ -301,7 +301,7 @@ function ABCS:Bar_OnEnter(bar)
 		if bar == _G["ElvUI_StanceBar"] then
 			local button
 			for i=1, NUM_STANCE_SLOTS do
-				button = bar.buttons[i] 
+				button = bar.buttons[i]
 				E:UIFrameFadeIn(button, 0.2, button:GetAlpha(), 1)
 			end
 		end
@@ -506,4 +506,8 @@ function ABCS:Initialize()
 	self:UpdateHooks("stanceBar")
 end
 
-E:RegisterModule(ABCS:GetName())
+local function InitializeCallback()
+	ABCS:Initialize()
+end
+
+E:RegisterModule(ABCS:GetName(), InitializeCallback)
