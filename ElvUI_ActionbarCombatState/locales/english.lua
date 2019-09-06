@@ -1,6 +1,5 @@
 ﻿-- English localization file forenGB.
-local AceLocale = LibStub:GetLibrary("AceLocale-3.0");
-local L = AceLocale:NewLocale("ElvUI", "enUS", true);
+local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS", true, true)
 if not L then return; end
 
 L['Combat State Options'] = true
