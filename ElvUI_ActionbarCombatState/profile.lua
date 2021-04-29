@@ -1,5 +1,5 @@
 local E, L, V, P, G, _ = unpack(ElvUI);
-local bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
+local bars = 10
 P.actionbar['combatstate'] = {}
 V['combatstate'] = {
 	["GlobalFullAlpha"] = false,

@@ -493,7 +493,7 @@ function ABCS:GlobalAlpha()
 end
 
 function ABCS:Initialize()
-	bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
+	bars = 10
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "EnteringCombat")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "LeavingCombat")
 	EP:RegisterPlugin(addon,ABCS.GetOptions)
