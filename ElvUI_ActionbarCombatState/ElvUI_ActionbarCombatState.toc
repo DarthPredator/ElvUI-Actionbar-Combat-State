@@ -3,11 +3,11 @@
 ## Author: Darth Predator
 ## Version: 1.46
 ## Notes: Plugin allowing |cff1784d1ElvUI|r's actionbars to have separate visual conditions in and out of combat.
-## Notes-ruRU: Плагин, позволяющий панелям действий |cff1784d1ElvUI|r иметь разные условия видимости в зависимости от участия в бою. 
+## Notes-ruRU: Плагин, позволяющий панелям действий |cff1784d1ElvUI|r иметь разные условия видимости в зависимости от участия в бою.
 ## eMail: darthpred@gmail.com
-## URL: 
+## URL:
 ## RequiredDeps: ElvUI
-## OptionalDeps: ElvUI_SLE, ElvUI_ExtraActionBars
+## OptionalDeps: ElvUI_SLE
 ## DefaultState: Enabled
 
 locales\load_locales.xml

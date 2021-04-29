@@ -323,6 +323,6 @@ E.Options.args.actionbar.args.combatstate = {
 	},
 }
 
-local bars = IsAddOnLoaded('ElvUI_ExtraActionBars') and 10 or 6
+local bars = 10
 ABConf(bars)
 end

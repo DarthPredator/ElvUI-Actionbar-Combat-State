@@ -182,80 +182,41 @@ function ABCS:MouseOverOption(i)
 			}
 		end
 	else
-		if IsAddOnLoaded('ElvUI_ExtraActionBars') and i > 6 then
-			if E.db.actionbar.combatstate['bar'..i]['enable'] then
-				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['mouseover'] = nil
-				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['visibility'] = nil
-				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['alpha'] = nil
-			else
-				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['mouseover'] = {
-					order = 5,
-					name = L['Mouse Over'],
-					desc = L['The frame is not shown unless you mouse over the frame.'],
-					type = "toggle",
-					get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; self:UpdateBarSettings('bar'..i) end,
-				}
-				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['alpha'] = {
-					order = 12,
-					type = 'range',
-					name = L['Alpha'],
-					isPercent = true,
-					min = 0, max = 1, step = 0.01,
-					get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; self:UpdateBarSettings('bar'..i) end,
-				}
-				E.Options.args.blazeplugins.args.EAB.args['bar'..i]['args']['visibility'] = {
-					type = 'input',
-					order = 14,
-					name = L['Visibility State'],
-					desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
-					width = 'full',
-					multiline = true,
-					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
-					set = function(info, value)
-						E.db.actionbar['bar'..i]['visibility'] = value;
-						self:UpdateBarSettings('bar'..i);
-					end,
-				}
-			end
+		if E.db.actionbar.combatstate['bar'..i]['enable'] then
+			E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = nil
+			E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = nil
+			E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = nil
 		else
-			if E.db.actionbar.combatstate['bar'..i]['enable'] then
-				E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = nil
-				E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = nil
-				E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = nil
-			else
-				E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = {
-					order = 5,
-					name = L['Mouse Over'],
-					desc = L['The frame is not shown unless you mouse over the frame.'],
-					type = "toggle",
-					get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; self:UpdateBarSettings('bar'..i) end,
-				}
-				E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = {
-					order = 12,
-					type = 'range',
-					name = L['Alpha'],
-					isPercent = true,
-					min = 0, max = 1, step = 0.01,
-					get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
-					set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; self:UpdateBarSettings('bar'..i) end,
-				}
-				E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = {
-					type = 'input',
-					order = 14,
-					name = L['Visibility State'],
-					desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
-					width = 'full',
-					multiline = true,
-					get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
-					set = function(info, value)
-						E.db.actionbar['bar'..i]['visibility'] = value;
-						self:UpdateBarSettings('bar'..i);
-					end,
-				}
-			end
+			E.Options.args.actionbar.args['bar'..i]['args']['mouseover'] = {
+				order = 5,
+				name = L['Mouse Over'],
+				desc = L['The frame is not shown unless you mouse over the frame.'],
+				type = "toggle",
+				get = function(info) return E.db.actionbar['bar'..i]['mouseover'] end,
+				set = function(info, value) E.db.actionbar['bar'..i]['mouseover'] = value; self:UpdateBarSettings('bar'..i) end,
+			}
+			E.Options.args.actionbar.args['bar'..i]['args']['alpha'] = {
+				order = 12,
+				type = 'range',
+				name = L['Alpha'],
+				isPercent = true,
+				min = 0, max = 1, step = 0.01,
+				get = function(info) return E.db.actionbar['bar'..i]['alpha'] end,
+				set = function(info, value) E.db.actionbar['bar'..i]['alpha'] = value; self:UpdateBarSettings('bar'..i) end,
+			}
+			E.Options.args.actionbar.args['bar'..i]['args']['visibility'] = {
+				type = 'input',
+				order = 14,
+				name = L['Visibility State'],
+				desc = L["This works like a macro, you can run different situations to get the actionbar to show/hide differently.\n Example: '[combat] show;hide'"],
+				width = 'full',
+				multiline = true,
+				get = function(info) return E.db.actionbar['bar'..i]['visibility'] end,
+				set = function(info, value)
+					E.db.actionbar['bar'..i]['visibility'] = value;
+					self:UpdateBarSettings('bar'..i);
+				end,
+			}
 		end
 	end
 end
