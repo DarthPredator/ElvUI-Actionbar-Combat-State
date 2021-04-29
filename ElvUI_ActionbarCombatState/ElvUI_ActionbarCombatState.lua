@@ -1,5 +1,6 @@
 ﻿local E, L, V, P, G, _ =  unpack(ElvUI);
 local ABCS = E:NewModule('ActionBarCS', 'AceHook-3.0', 'AceEvent-3.0');
+E.ActionBarCS = ABCS
 local AB = E:GetModule('ActionBars');
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addon = ...
